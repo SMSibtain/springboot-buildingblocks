@@ -11,11 +11,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@SuppressWarnings("rawtypes")
 @Entity
 @Table(name = "user")
-public class User {
+public class User extends RepresentationModel {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -47,7 +50,9 @@ public class User {
 
 	}
 
-	public User(Long id, String userName, String firstName, String lastName, String email, String role, String ssn) {
+	public User(Long id, @NotEmpty(message = "Username is Mendatory field. Please provided username") String userName,
+			@Size(min = 2, message = "FirstName should have atleast 2 characters") String firstName, String lastName,
+			String email, String role, String ssn, List<Order> orders) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -56,6 +61,7 @@ public class User {
 		this.email = email;
 		this.role = role;
 		this.ssn = ssn;
+		this.orders = orders;
 	}
 
 	public Long getId() {
