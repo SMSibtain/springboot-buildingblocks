@@ -5,16 +5,20 @@ public class UserMsDto {
 	private Long id;
 	private String userName;
 	private String emailAddres;
+	private String rolename;
 
 	public UserMsDto() {
 	}
 
-	public UserMsDto(Long id, String userName, String emailAddres) {
+	
+	public UserMsDto(Long id, String userName, String emailAddres, String rolename) {
 		super();
 		this.id = id;
 		this.userName = userName;
 		this.emailAddres = emailAddres;
+		this.rolename = rolename;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -39,4 +43,14 @@ public class UserMsDto {
 	public void setEmailAddres(String emailAddres) {
 		this.emailAddres = emailAddres;
 	}
+
+	public String getRolename() {
+		return rolename;
+	}
+
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+	
+	
 }
