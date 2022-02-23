@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
@@ -18,23 +19,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+
 @SuppressWarnings("rawtypes")
+@ApiModel(description = "This model is to create a user")
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstName","lastName"}) -- Part of Static Filtering @JsonIgnore
 //@JsonFilter("userFilter") - Used for MappingJacksonValue Filtering Section
 public class User extends RepresentationModel {
+	@ApiModelProperty(notes = "Auto generate unique id", required = true, position = 1)
 	@Id
 	@GeneratedValue
 	@JsonView(Views.External.class)
 	private Long id;
 
+	@ApiModelProperty(notes = "Username should be in format flname", example = "smsrn", required = true, position = 2)
+	@Size(min = 2, max = 50)
 	@NotEmpty(message = "Username is Mendatory field. Please provided username")
 	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
 	@JsonView(Views.External.class)
 	private String userName;
 
-	@Size(min = 2, message = "FirstName should have atleast 2 characters")
+	@Size(min = 2, max = 50, message = "FirstName should have atleast 2 characters")
 	@Column(name = "FIRST_NAME", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String firstName;
